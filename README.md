@@ -23,8 +23,8 @@ FIELDSEP = ,
 
 [DATABASE]
 DBTYPE = mysql
-DBSERVER = 221.123.166.214
-DBNAME = sbilling_test
+DBSERVER = XXX.XXX.XXX.XXX
+DBNAME = test
 DBPORT = 3306
 LOGINFILE = /sbilling/work/vince/work/file2db/cfg/login
 
