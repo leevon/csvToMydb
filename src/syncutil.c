@@ -1,66 +1,8 @@
-
-
 #include "syncutil.h"
 #include "syncdef.h"
 #include <string.h>
 
-/**
- * Generate daemon process.
- *
- * @param void
- * @return boolean
- */
-void genDaemon( void )
-{
-    int i;
-    i=fork();
-    //fork error
-    if (i<0) exit(1);
-    if (i>0) exit(0);
-    //parent exits 
-    // child (daemon) continues
-    // obtain a new process group
-    setsid();
 
-    i=0;
-    for (i=getdtablesize();i>=0;--i) 
-        close(i);
-    // open stdin
-    i=open("/dev/null",O_RDWR); 
-    // stdout
-    dup(i);
-    //stderr
-    dup(i);
-    umask(027);
-    chdir("/sbilling/");
-
-    //signal(SIG_IGN,SIGCHLD); /* child terminate signal */
-}
-
-/**
- * Get field value by field number.
- *
- * @param PBILL_DATA pBillData The global variable contains all billing data.
- * @param char* szRecord 	The string format record.
- * @param int fieldNo	The field number in the string.
-
- * @return MY_SUCCEED|MY_FAIL
- */
-
-char* getField(char* szRecord, int fieldNo)
-{
-    int nFieldNo = 0;
-    char  *token,*str1,*saveptr1;
-    int j;
-
-    for (j = 0, str1 = szRecord; ; j++, str1 = NULL) {
-        token = strtok_r(str1, ",", &saveptr1);
-        if (token == NULL)
-            break;
-        if (j == fieldNo)
-            return token;
-    }
-}
 
 /**
  * Get field value by field number.

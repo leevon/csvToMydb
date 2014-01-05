@@ -70,70 +70,9 @@ int getCmd( PSYNC_DATA pSyncData, int argc, char * argv[] )
     return MY_SUCCEED;
 }
 
-/**
- * Get the sql statement from syncsql.ini
- *
- * @param PSYNC_DATA pSyncData The global sync data.
- * @return MY_SUCCEED|MY_FAIL
- */
-/*
-int getSqlStmt(PSYNC_DATA pSyncData)
-{
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "GetConfNo", pSyncData->dciInfo.stmtGetConfNo.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT GetConfNo is not configured !\n\n" );
-        return MY_FAIL;
-    }
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "ImportNewUser", pSyncData->dciInfo.stmtNewUser.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT ImportNewUser is not configured !\n\n" );
-        return MY_FAIL;
-    }
 
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "GetContact", pSyncData->dciInfo.stmtGetContact.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT GetContact is not configured !\n\n" );
-        return MY_FAIL;
-    }
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "ImportNewContact", pSyncData->dciInfo.stmtImpContact.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT ImportNewContact is not configured !\n\n" );
-        return MY_FAIL;
-    }
-    
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "GetCid", pSyncData->dciInfo.stmtGetCid.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT GetCid is not configured !\n\n" );
-        return MY_FAIL;
-    }
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "ImportNewCid", pSyncData->dciInfo.stmtImpCid.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT ImportNewCid is not configured !\n\n" );
-        return MY_FAIL;
-    }
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "GetLastId", pSyncData->dciInfo.stmtGetLastId.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT GetLastId is not configured !\n\n" );
-        return MY_FAIL;
-    }
-    
-    if( MY_SUCCEED != getConfigParaValue( pSyncData->syncCfg.szSqlFileName, "SQL", "GetCtlrFlag", pSyncData->dciInfo.stmtGetCtrlFlag.szSql ) )
-    {
-        MyLog( LOG_SOURCE_APP, LOG_LEVEL_WARN, "[SQL] SQLSTMT GetCtlrFlag is not configured !\n\n" );
-        return MY_FAIL;
-    }
-
-    return MY_SUCCEED;
-}
-*/
 /**
- *get insert table info list from syncsql.ini
+ *get insert table info list from config file
  *add by liwq at 20131111
  */
 int getInsertInfo(PSYNC_DATA pSyncData)
@@ -225,7 +164,6 @@ int initSyncData(PSYNC_DATA pSyncData)
         memset(pSyncData->szFiled[loop], 0, MAX_FIELD_LEN);
     }
     
-    //memset(&(pSyncData->custInfo), 0, sizeof(pSyncData->custInfo));
     memset(&(pSyncData->insertInfo), 0, sizeof(pSyncData->insertInfo));
     return 0;
 }
@@ -343,17 +281,10 @@ int getConfig( PSYNC_DATA pSyncData )
     }
 
 
-//-----modify by vince_lee at 20131111 b ------
-//    if ( MY_SUCCEED !=getSqlStmt(pSyncData))
-//    {
-//        return MY_FAIL;
-//    }
-
     if (MY_SUCCEED != getInsertInfo(pSyncData))
     {
       return MY_FAIL;
     }
-//-----modify by vince_lee at 20131111 e ------
 
     if( MY_SUCCEED != getConfigParaValue( pSyncCfg->szIniFile, "DATABASE", "DBTYPE", pDci->szDbType ) )
     {
@@ -568,10 +499,10 @@ int main(int argc,char *argv[])
 
         sleep( 1 );
     }
-    //putRstRcd(syncData.nProcHandle, syncData.insertInfo.pHead);
+
     freeMemoryData( &syncData );
     dbDisconnect(&syncData);
-    printf("====success\n");
+    printf("====success====\n");
 
 }
 
