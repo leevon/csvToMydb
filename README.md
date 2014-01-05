@@ -8,7 +8,8 @@ CSV file into mysql db
 特定分割符分割的文本文件按照配置文件规则入库。其中，文本中的一条数据可以入几张不同或相同的表。入库逻辑通过配置文件配置实现。
 2. 配置数据：
 公共配置文件
-dbsync.ini
+
+
 [DIRECTORY]
 LOGDIR = /sbilling/work/vince/work/file2db/log
 RUNLOG = /sbilling/work/vince/work/file2db/log/runlog
@@ -17,9 +18,11 @@ REJDIR = /sbilling/work/vince/work/file2db/data/reject
 INDIR = /sbilling/work/vince/work/file2db/data/in
 BAKDIR = /sbilling/work/vince/work/file2db/data/bak
 
+
 [CONFIG]
 SQLSTMT = /sbilling/work/vince/work/file2db/cfg/file2db.ini
 FIELDSEP = ,
+
 
 [DATABASE]
 DBTYPE = mysql
@@ -28,11 +31,14 @@ DBNAME = test
 DBPORT = 3306
 LOGINFILE = /sbilling/work/vince/work/file2db/cfg/login
 
+
 [CONTROL]
 #option: DEBUG,WARN,ERROR,CRITICAL
 LOGLEVEL = DEBUG
 CTRLFLAG = sync
 LOGBATCH = 120
+
+
 插入逻辑配置文件
 file2db.ini
 [insertlist]
@@ -67,6 +73,7 @@ map=6,7,0,3
 ./startup.sh 或者 ./file2db –i 配置文件（全路径）
 4.检查日志结果。
 
+
 [sbilling@A1 bin]$ cat startup.sh 
 #!/bin/bash 
 
@@ -79,7 +86,9 @@ do
 done
 
 printf "\n"
-./file2db -i /sbilling/work/vince/work/file2db/cfg/dbsync.ini &
+./file2db -i /sbilling/work/vince/work/file2db/cfg/csvToMydb.conf &
+
+
 4. 结果查看：
 在配置文件LOGTMP路径下会生成文本入库记录。
 [sbilling@A1 temp]$ more dbsync.in.log
@@ -102,6 +111,7 @@ printf "\n"
 说明：该表(vince_lee_test_phone)本次入库记录为4条。
 [user_info.txt]:20131113141241375401:20131113141241379605:T 5:V 4:E 1
 说明：文件user_info.txt入库开始时间为20131113141241375401结束时间为20131113141241379605.文本总共5条记录，其中4条有效，1条无效。
+
 
 5. 实现逻辑：
 1.根据配置文件初始化运行环境。包括日志（路径、等级），入库文件（入库路径和备份路径），数据库（数据库类型、用户和口令）等。
@@ -128,6 +138,7 @@ typedef struct _INSERTLIST_INFO
   typeTableInfo *pHead;
 } typeInsertInfo;
 
+
 3.根据配置文件数据库的用户名和口令，连接数据库。
 4.根据配置文件入库逻辑初始化数据库运行环境。
 5.循环读取配置文件路径下的文件。
@@ -139,6 +150,8 @@ typedef struct _INSERTLIST_INFO
 9.再读取目录下的文件。
 10.结束，程序退出。
 
+
+
 附录：
 入库文件样例：
 user_id,user_name,age,acct_id,acct_name,acct_amount,phone_id,pin
@@ -149,4 +162,4 @@ user_id,user_name,age,acct_id,acct_name,acct_amount,phone_id,pin
 
 注：入库文件中的文件头是必须的，没有也要空出一行，否则会少入库一条记录。
     联系：
-Autor: vince_lee@bizconf.com
+Autor: leevon@yeah.net
