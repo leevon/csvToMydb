@@ -1,20 +1,4 @@
-/**
- * Shanghai Shrine Telcom Co ., LTD
- *
- * $Rev: $
- * $LastChangedDate: $
- * $LastChangedBy: $
- *
- * @category   Billing
- * @package    Billing
- * @subpackage Charging
- * @copyright  Copyright (c) 2003-2012 Shanghai Shrine Telecom
- * @author Glen MENG
- * @version    $Id:$
- * @since      1.0.0
- */
 
- 
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
